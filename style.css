@@ -1,0 +1,12 @@
+/* styles.css */
+
+.task {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.task.completed {
+    text-decoration: line-through;
+    color: #888;
+}
