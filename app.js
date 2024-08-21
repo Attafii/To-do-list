@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 li.classList.toggle('completed');
             });
             li.appendChild(completeBtn);
+
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.className = 'delete-btn';
@@ -39,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
             taskList.appendChild(li);
             taskInput.value = '';
             taskDate.value = '';
+=======
+            li.addEventListener('click', function() {
+                li.classList.toggle('completed');
+            });
         }
     }
 

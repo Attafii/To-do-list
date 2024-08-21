@@ -103,6 +103,7 @@ header {
     font-size: 1.2em;
     color: #28a745; /* Color of the checkmark */
     margin-right: 10px;
+
 }
 
 .delete-btn {
@@ -117,7 +118,6 @@ header {
 .delete-btn:hover {
     background-color: #ff1a1a;
 }
-
 .complete-btn {
     background-color: #28a745; /* Green color for complete button */
     color: white;
