@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Clear the input field
             taskInput.value = '';
+
+            // Add event listener to mark task as complete
+            li.addEventListener('click', function() {
+                li.classList.toggle('completed');
+            });
         }
     }
 
