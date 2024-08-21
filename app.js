@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('task-input');
+    const taskDate = document.getElementById('task-date');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
     const dateElement = document.getElementById('date');
@@ -10,12 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
+        const taskDateValue = taskDate.value;
         if (taskText !== '') {
             const li = document.createElement('li');
             li.className = 'task';
             const taskSpan = document.createElement('span');
             taskSpan.textContent = taskText;
+            const taskDateSpan = document.createElement('span');
+            taskDateSpan.textContent = taskDateValue ? ` (${new Date(taskDateValue).toLocaleDateString()})` : '';
+            taskDateSpan.className = 'task-date';
             li.appendChild(taskSpan);
+            li.appendChild(taskDateSpan);
+            const completeBtn = document.createElement('button');
+            completeBtn.textContent = 'Complete';
+            completeBtn.className = 'complete-btn';
+            completeBtn.addEventListener('click', function() {
+                li.classList.toggle('completed');
+            });
+            li.appendChild(completeBtn);
+
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.className = 'delete-btn';
@@ -25,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
             li.appendChild(deleteBtn);
             taskList.appendChild(li);
             taskInput.value = '';
+            taskDate.value = '';
+=======
             li.addEventListener('click', function() {
                 li.classList.toggle('completed');
             });

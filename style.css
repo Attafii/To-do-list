@@ -63,6 +63,11 @@ header {
     font-size: 1em;
 }
 
+#task-date {
+    padding: 10px;
+    font-size: 1em;
+}
+
 #add-task-btn {
     padding: 10px 20px;
     font-size: 1em;
@@ -82,13 +87,23 @@ header {
     border-bottom: 1px solid #ccc;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px;
+    background-color: #fff; /* Default background color */
 }
 
 .task.completed {
-    text-decoration: line-through;
-    color: #888;
+    background-color: #fff; /* Background color for completed tasks */
+    color: #28a745; /* Text color for completed tasks */
+    text-decoration: line-through; /* Strikethrough for completed text */
+}
+
+.task.completed::before {
+    content: '✔️'; /* Checked mark for completed tasks */
+    font-size: 1.2em;
+    color: #28a745; /* Color of the checkmark */
+    margin-right: 10px;
+
 }
 
 .delete-btn {
@@ -102,4 +117,22 @@ header {
 
 .delete-btn:hover {
     background-color: #ff1a1a;
+}
+.complete-btn {
+    background-color: #28a745; /* Green color for complete button */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.complete-btn:hover {
+    background-color: #218838; /* Darker green for hover effect */
+}
+
+/* Task Date Styles */
+.task-date {
+    font-size: 0.9em;
+    color: #666;
 }
