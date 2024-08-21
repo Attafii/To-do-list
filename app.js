@@ -18,6 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
             taskSpan.textContent = taskText;
             li.appendChild(taskSpan);
 
+            // Create a delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.addEventListener('click', function() {
+                li.remove();
+            });
+            li.appendChild(deleteBtn);
+
             // Append the new task to the task list
             taskList.appendChild(li);
 
