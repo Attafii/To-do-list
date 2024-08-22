@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('task-input');
-    const taskDate = document.getElementById('task-date');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
     const dateElement = document.getElementById('date');
@@ -11,17 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
-        const taskDateValue = taskDate.value;
         if (taskText !== '') {
             const li = document.createElement('li');
             li.className = 'task';
             const taskSpan = document.createElement('span');
             taskSpan.textContent = taskText;
-            const taskDateSpan = document.createElement('span');
-            taskDateSpan.textContent = taskDateValue ? ` (${new Date(taskDateValue).toLocaleDateString()})` : '';
-            taskDateSpan.className = 'task-date';
             li.appendChild(taskSpan);
-            li.appendChild(taskDateSpan);
             const completeBtn = document.createElement('button');
             completeBtn.textContent = 'Complete';
             completeBtn.className = 'complete-btn';
@@ -29,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 li.classList.toggle('completed');
             });
             li.appendChild(completeBtn);
-
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.className = 'delete-btn';
@@ -39,21 +32,24 @@ document.addEventListener('DOMContentLoaded', function() {
             li.appendChild(deleteBtn);
             taskList.appendChild(li);
             taskInput.value = '';
-            taskDate.value = '';
-=======
-            li.addEventListener('click', function() {
-                li.classList.toggle('completed');
-            });
         }
     }
 
     // Add event listener to the button
-    addTaskBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            addTask();
+    addTaskBtn.addEventListener('click', () => {
+        const taskText = taskInput.value.trim();
+        console.log(`Adding task: ${taskText}`);
+        if (taskText !== '') {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${taskText}</span> <button class="complete-btn">Complete</button>`;
+            taskList.appendChild(li);
+            console.log(`Task added: ${li.outerHTML}`);
+            taskInput.value = '';  // Clear input after adding
+        } else {
+            console.log('No task text provided');
         }
     });
+    
 
     // Display the current date
     function displayDate() {
