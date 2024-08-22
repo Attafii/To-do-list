@@ -1,18 +1,17 @@
-name: Auto Merge PR
+name: Pull Request Workflow
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  auto-merge:
+  create-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Merge PR
-        uses: devops-infra/action-pull-request@v0.8.0
+      - name: Create Pull Request
+        uses: devops-infra/action-pull-request@latest
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          merge_method: 'merge'
