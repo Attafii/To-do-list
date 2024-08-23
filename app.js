@@ -1,27 +1,31 @@
-// app.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('task-input');
-    const taskDate = document.getElementById('task-date');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
     const dateElement = document.getElementById('date');
     const calendarContainer = document.querySelector('.calendar-container');
+    const categorySelect = document.getElementById('category-select');
+    const filterSelect = document.getElementById('filter-select');
 
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
-        const taskDateValue = taskDate.value;
+        const category = categorySelect.value;
+
         if (taskText !== '') {
             const li = document.createElement('li');
-            li.className = 'task';
+            li.className = `task ${category.toLowerCase()}`; // Add category class
+            li.setAttribute('data-category', category);
+
             const taskSpan = document.createElement('span');
             taskSpan.textContent = taskText;
-            const taskDateSpan = document.createElement('span');
-            taskDateSpan.textContent = taskDateValue ? ` (${new Date(taskDateValue).toLocaleDateString()})` : '';
-            taskDateSpan.className = 'task-date';
             li.appendChild(taskSpan);
-            li.appendChild(taskDateSpan);
+
+            const categoryBadge = document.createElement('span');
+            categoryBadge.className = 'category-badge';
+            categoryBadge.textContent = category;
+            li.appendChild(categoryBadge);
+
             const completeBtn = document.createElement('button');
             completeBtn.textContent = 'Complete';
             completeBtn.className = 'complete-btn';
@@ -29,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 li.classList.toggle('completed');
             });
             li.appendChild(completeBtn);
+
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.className = 'delete-btn';
@@ -36,19 +41,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 li.remove();
             });
             li.appendChild(deleteBtn);
+
             taskList.appendChild(li);
             taskInput.value = '';
-            taskDate.value = '';
         }
     }
 
-    // Add event listener to the button
-    addTaskBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            addTask();
+    // Function to filter tasks by category
+    function filterTasks() {
+        const filter = filterSelect.value;
+        const tasks = taskList.getElementsByTagName('li');
+
+        for (let task of tasks) {
+            const category = task.getAttribute('data-category');
+            if (filter === 'All' || filter === category) {
+                task.style.display = '';
+            } else {
+                task.style.display = 'none';
+            }
         }
-    });
+    }
+
+    // Add event listener to the add task button
+    addTaskBtn.addEventListener('click', addTask);
+
+    // Add event listener to the filter select dropdown
+    filterSelect.addEventListener('change', filterTasks);
 
     // Display the current date
     function displayDate() {
