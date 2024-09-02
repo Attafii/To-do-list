@@ -5,17 +5,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateElement = document.getElementById('date');
     const calendarContainer = document.querySelector('.calendar-container');
     const categorySelect = document.getElementById('category-select');
-    const filterSelect = document.getElementById('filter-select');
+    const prioritySelect = document.getElementById('priority-select');
+    const filterCategorySelect = document.getElementById('filter-category-select');
+    const filterPrioritySelect = document.getElementById('filter-priority-select');
 
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
         const category = categorySelect.value;
+        const priority = prioritySelect.value;
 
         if (taskText !== '') {
             const li = document.createElement('li');
-            li.className = `task ${category.toLowerCase()}`; // Add category class
+            li.className = `task ${category.toLowerCase()} priority-${priority.toLowerCase()}`;
             li.setAttribute('data-category', category);
+            li.setAttribute('data-priority', priority);
 
             const taskSpan = document.createElement('span');
             taskSpan.textContent = taskText;
@@ -25,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
             categoryBadge.className = 'category-badge';
             categoryBadge.textContent = category;
             li.appendChild(categoryBadge);
+
+            const priorityBadge = document.createElement('span');
+            priorityBadge.className = 'priority-badge';
+            priorityBadge.textContent = priority;
+            li.appendChild(priorityBadge);
 
             const completeBtn = document.createElement('button');
             completeBtn.textContent = 'Complete';
@@ -47,14 +56,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to filter tasks by category
+    // Function to filter tasks by category and priority
     function filterTasks() {
-        const filter = filterSelect.value;
+        const filterCategory = filterCategorySelect.value;
+        const filterPriority = filterPrioritySelect.value;
         const tasks = taskList.getElementsByTagName('li');
 
         for (let task of tasks) {
-            const category = task.getAttribute('data-category');
-            if (filter === 'All' || filter === category) {
+            const taskCategory = task.getAttribute('data-category');
+            const taskPriority = task.getAttribute('data-priority');
+
+            const categoryMatch = (filterCategory === 'All' || filterCategory === taskCategory);
+            const priorityMatch = (filterPriority === 'All' || filterPriority === taskPriority);
+
+            if (categoryMatch && priorityMatch) {
                 task.style.display = '';
             } else {
                 task.style.display = 'none';
@@ -65,8 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to the add task button
     addTaskBtn.addEventListener('click', addTask);
 
-    // Add event listener to the filter select dropdown
-    filterSelect.addEventListener('change', filterTasks);
+    // Add event listeners to the filter select dropdowns
+    filterCategorySelect.addEventListener('change', filterTasks);
+    filterPrioritySelect.addEventListener('change', filterTasks);
 
     // Display the current date
     function displayDate() {
@@ -83,10 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const firstDay = new Date(year, month, 1).getDay();
         const lastDate = new Date(year, month + 1, 0).getDate();
 
-        // Clear previous calendar
         calendarContainer.innerHTML = '';
 
-        // Calendar headers (days of the week)
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         daysOfWeek.forEach(day => {
             const header = document.createElement('div');
@@ -95,14 +109,12 @@ document.addEventListener('DOMContentLoaded', function() {
             calendarContainer.appendChild(header);
         });
 
-        // Blank spaces before the first day
         for (let i = 0; i < firstDay; i++) {
             const blank = document.createElement('div');
             blank.className = 'calendar-day';
             calendarContainer.appendChild(blank);
         }
 
-        // Days of the month
         for (let day = 1; day <= lastDate; day++) {
             const dayElement = document.createElement('div');
             dayElement.className = 'calendar-day';
