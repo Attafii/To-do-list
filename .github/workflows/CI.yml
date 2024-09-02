@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to trigger builds for
+  pull_request:
+    branches:
+      - main  # or the branch you want to trigger builds for
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # Use the Node.js version your app requires
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+      env:
+        CI: true
