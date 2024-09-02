@@ -22,15 +22,26 @@
                 <option value="Personal">Personal</option>
                 <option value="Urgent">Urgent</option>
             </select>
+            <select id="priority-select">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
             <button id="add-task-btn">Add Task</button>
         </div>
         <div class="filter-container">
-            <label for="filter-select">Filter by category:</label>
-            <select id="filter-select">
-                <option value="All">All</option>
+            <select id="filter-category-select">
+                <option value="All">All Categories</option>
                 <option value="Work">Work</option>
                 <option value="Personal">Personal</option>
                 <option value="Urgent">Urgent</option>
+            </select>
+
+            <select id="filter-priority-select">
+                <option value="All">All Priorities</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
             </select>
         </div>
         <ul id="task-list"></ul>
